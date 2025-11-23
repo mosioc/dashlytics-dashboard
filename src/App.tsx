@@ -12,6 +12,7 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router";
 
 import { dataProvider, liveProvider, authProvider } from "./providers";
 import { LoginPage } from "./routes/login";
+import { resources } from "./config/resources";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
                 notificationProvider={useNotificationProvider}
                 routerProvider={routerProvider}
                 authProvider={authProvider}
+                resources={resources}
                 options={{
                   syncWithLocation: true,
                   warnWhenUnsavedChanges: true,
