@@ -1,5 +1,6 @@
 import type { AuthProvider } from "@refinedev/core";
 import { API_URL, dataProvider } from "./data";
+import type { User } from "@/graphql/schema.types";
 
 // default credentials for demo/development
 export const authCredentials = {
@@ -16,7 +17,7 @@ export const authProvider: AuthProvider = {
         method: "post",
         headers: {},
         meta: {
-          variables: { email, password }, 
+          variables: { email, password },
           rawQuery: `
                 mutation Login($email: String!, $password: String!) {
                     login(loginInput: {
@@ -69,7 +70,33 @@ export const authProvider: AuthProvider = {
   },
   // verifies authentication by fetching current user data
   check: async () => {
-    console.log("check");
+    try {
+      await dataProvider.custom({
+        url: API_URL,
+        method: "post",
+        headers: {},
+        meta: {
+          rawQuery: `
+                    query Me {
+                        me {
+                          name
+                        }
+                      }
+                `,
+        },
+      });
+
+      return {
+        authenticated: true,
+        redirectTo: "/",
+      };
+    } catch (error) {
+      console.log(error);
+      return {
+        authenticated: false,
+        redirectTo: "/login",
+      };
+    }
   },
   // fetches current user's profile data
   getIdentity: async () => {
