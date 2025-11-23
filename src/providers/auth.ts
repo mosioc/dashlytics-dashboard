@@ -4,25 +4,24 @@ import type { User } from "@/graphql/schema.types";
 
 // default credentials for demo/development
 export const authCredentials = {
-  email: "mehdimaleki@mosioc.com",
+  email: "michael.scott@dundermifflin.com",
   password: "demodemo",
 };
 
 export const authProvider: AuthProvider = {
   // authenticates user and stores access token in localstorage
-  login: async ({ email, password }) => {
+  login: async ({ email }) => {
     try {
       const { data } = await dataProvider.custom({
         url: API_URL,
         method: "post",
         headers: {},
         meta: {
-          variables: { email, password },
+          variables: { email },
           rawQuery: `
-                mutation Login($email: String!, $password: String!) {
+                mutation Login($email: String!) {
                     login(loginInput: {
                       email: $email
-                      password: $password
                     }) {
                       accessToken,
                     }
