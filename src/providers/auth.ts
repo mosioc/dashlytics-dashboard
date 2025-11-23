@@ -100,6 +100,38 @@ export const authProvider: AuthProvider = {
   },
   // fetches current user's profile data
   getIdentity: async () => {
-    console.log("getIdentity");
+    const accessToken = localStorage.getItem("access_token");
+
+    try {
+      const { data } = await dataProvider.custom<{ me: User }>({
+        url: API_URL,
+        method: "post",
+        headers: accessToken
+          ? {
+              Authorization: `Bearer ${accessToken}`,
+            }
+          : {},
+        meta: {
+          rawQuery: `
+                    query Me {
+                        me {
+                            id,
+                            name,
+                            email,
+                            phone,
+                            jobTitle,
+                            timezone, 
+                            avatarUrl
+                        }
+                      }
+                `,
+        },
+      });
+
+      return data.me;
+    } catch (error) {
+      console.log(error);
+      return undefined;
+    }
   },
 };
