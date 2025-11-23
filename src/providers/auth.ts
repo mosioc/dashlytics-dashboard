@@ -58,7 +58,13 @@ export const authProvider: AuthProvider = {
   },
   // handles authentication errors, triggers logout on unauthenticated status
   onError: async (error) => {
-    console.log(error);
+    if (error.statusCode === "UNAUTHENTICATED") {
+      return {
+        logout: true,
+      };
+    }
+
+    return { error };
   },
   // verifies authentication by fetching current user data
   check: async () => {
