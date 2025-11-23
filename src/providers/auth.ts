@@ -1,4 +1,5 @@
 import type { AuthProvider } from "@refinedev/core";
+import { API_URL, dataProvider } from "./data";
 
 // default credentials for demo/development
 export const authCredentials = {
@@ -9,7 +10,42 @@ export const authCredentials = {
 export const authProvider: AuthProvider = {
   // authenticates user and stores access token in localstorage
   login: async ({ email }) => {
-    console.log(email);
+    try {
+      const { data } = await dataProvider.custom({
+        url: API_URL,
+        method: "post",
+        headers: {},
+        meta: {
+          variables: { email },
+          rawQuery: `
+                mutation Login($email: String!) {
+                    login(loginInput: {
+                      email: $email
+                    }) {
+                      accessToken,
+                    }
+                  }
+                `,
+        },
+      });
+
+      localStorage.setItem("access_token", data.login.accessToken);
+
+      return {
+        success: true,
+        redirectTo: "/",
+      };
+    } catch (e) {
+      const error = e as Error;
+
+      return {
+        success: false,
+        error: {
+          message: "message" in error ? error.message : "Login failed",
+          name: "name" in error ? error.name : "Invalid email or password",
+        },
+      };
+    }
   },
   // clears access token and redirects to login
   logout: async () => {},
