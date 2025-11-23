@@ -11,7 +11,7 @@ import { App as AntdApp, ConfigProvider } from "antd";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router";
 
 import { dataProvider, liveProvider, authProvider } from "./providers";
-import { LoginPage } from "./routes/login";
+import { LoginPage, DashboardPage } from "./routes";
 
 function App() {
   return (
@@ -34,6 +34,7 @@ function App() {
                 }}
               >
                 <Routes>
+                  <Route index element={<DashboardPage />} />
                   <Route path="/login" element={<LoginPage />} />
                 </Routes>
 
