@@ -48,7 +48,14 @@ export const authProvider: AuthProvider = {
     }
   },
   // clears access token and redirects to login
-  logout: async () => {},
+  logout: async () => {
+    localStorage.removeItem("access_token");
+
+    return {
+      success: true,
+      redirectTo: "/login",
+    };
+  },
   // handles authentication errors, triggers logout on unauthenticated status
   onError: async (error) => {
     console.log(error);
