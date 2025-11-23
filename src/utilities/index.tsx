@@ -1,6 +1,7 @@
 /* utility functions for formatting, colors, and dates
  * includes currency formatting, name initials extraction, color generation, and date status helpers
  */
+
 import dayjs from "dayjs";
 
 // format number as currency (defaults to USD)
