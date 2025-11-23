@@ -6,13 +6,14 @@ import "@refinedev/antd/dist/reset.css";
 import routerProvider, {
   DocumentTitleHandler,
   UnsavedChangesNotifier,
+  CatchAllNavigate,
 } from "@refinedev/react-router";
 import { App as AntdApp, ConfigProvider } from "antd";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router";
-
 import { dataProvider, liveProvider, authProvider } from "./providers";
 import { LoginPage } from "./routes/login";
 import { resources } from "./config/resources";
+import { ComponentLayout } from "./components";
 
 function App() {
   return (
@@ -36,6 +37,19 @@ function App() {
                 }}
               >
                 <Routes>
+                  <Route
+                    element={
+                      <Authenticated
+                        key="authenticated-layout"
+                        fallback={<CatchAllNavigate to="/login" />}
+                      >
+                        <ComponentLayout>
+                          <Outlet />
+                        </ComponentLayout>
+                      </Authenticated>
+                    }
+                  ></Route>
+
                   <Route path="/login" element={<LoginPage />} />
                 </Routes>
 

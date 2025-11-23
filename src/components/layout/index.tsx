@@ -2,7 +2,7 @@ import React from "react";
 import { ThemedLayout, ThemedTitle } from "@refinedev/antd";
 import { Header } from "./header";
 
-export const Layout = ({ children }: React.PropsWithChildren) => {
+export const ComponentLayout = ({ children }: React.PropsWithChildren) => {
   return (
     <>
       <ThemedLayout

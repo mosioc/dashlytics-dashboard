@@ -11,7 +11,7 @@ import type {
   UpdateUserMutation,
   UpdateUserMutationVariables,
 } from "@/graphql/types";
-import { getNameInitials } from "@/utilities";
+import { getNameInitials } from "../../../utilities";
 import { CustomAvatar } from "../../avatar";
 import { Text } from "../../text";
 import { UPDATE_USER_MUTATION } from "./queries";
