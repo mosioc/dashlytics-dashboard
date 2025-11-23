@@ -18,11 +18,10 @@ import routerProvider, {
 } from "@refinedev/react-router";
 import { App as AntdApp } from "antd";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router";
-import { authProvider } from "./authProvider";
 import { Header } from "./components/header";
 import { ColorModeContextProvider } from "./contexts/color-mode";
 
-import { dataProvider, liveProvider } from "./providers";
+import { dataProvider, liveProvider, authProvider } from "./providers";
 
 function App() {
   return (
