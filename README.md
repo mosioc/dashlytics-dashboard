@@ -107,7 +107,7 @@ Dashlytics is a sophisticated CRM dashboard application designed to help busines
 
 1. **Clone the repository:**
    ```powershell
-   git clone https://github.com/mosioc/vcain.git
+   git clone https://github.com/mosioc/dashlytics-dashboard.git
    cd dashlytics-dashboard
    ```
 
@@ -304,7 +304,7 @@ sequenceDiagram
 
 ### Directory Organization
 
-```
+```text
 src/
 ├── App.tsx                 # Root component with routing and providers
 ├── index.tsx              # Application entry point
@@ -579,8 +579,6 @@ This project uses strict TypeScript configuration ensuring:
 - **Strict Mode** - React StrictMode enabled for development
 
 ### Git Workflow
-
-Current branch: `6-feat-implement-charts-and-dashboard-feats`
 
 Recommended practices:
 - Create feature branches from main
