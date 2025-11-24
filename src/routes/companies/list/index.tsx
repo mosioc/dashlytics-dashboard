@@ -3,11 +3,12 @@
  * children prop renders nested routes like create/edit modals
  */
 import React from "react";
-import { List, useTable } from "@refinedev/antd";
+import { List, useTable, CreateButton } from "@refinedev/antd";
 import { type HttpError, useGo } from "@refinedev/core";
 import type { GetFieldsFromList } from "@refinedev/nestjs-query";
 import type { CompaniesListQuery } from "@/graphql/types";
 import { COMPANIES_LIST_QUERY } from "./queries";
+import { Table } from "antd";
 
 type Company = GetFieldsFromList<CompaniesListQuery>;
 
@@ -51,7 +52,28 @@ export const CompanyListPage = ({ children }: React.PropsWithChildren) => {
 
   return (
     <div className="page-container">
-      <List></List>
+      <List
+        breadcrumb={false}
+        headerButtons={() => (
+          <CreateButton
+            onClick={() => {
+              // navigate to create modal route while preserving query params
+              go({
+                to: {
+                  resource: "companies",
+                  action: "create",
+                },
+                options: {
+                  keepQuery: true,
+                },
+                type: "replace",
+              });
+            }}
+          />
+        )}
+      >
+        <Table></Table>
+      </List>
 
       {/* render nested modal routes (create/edit) */}
       {children}
