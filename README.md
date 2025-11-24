@@ -40,6 +40,48 @@ Notes & best practices:
 - Types are provided; you can import config types from `@ant-design/plots` when building complex charts.
 - For advanced customization, animations, and examples, see the official docs: [charts.ant.design](https://charts.ant.design/)
 
+## React Router
+
+This project uses `react-router-dom` for client-side routing. `react-router-dom` (v6+) provides a small, declarative API for defining routes using `BrowserRouter`, `Routes`, and `Route` components.
+
+Installation:
+
+```powershell
+npm install react-router-dom
+```
+
+Basic setup example:
+
+```tsx
+import React from "react";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import Home from "./src/components/Home";
+import Dashboard from "./src/components/Dashboard";
+
+const AppRoutes: React.FC = () => (
+  <BrowserRouter>
+    <nav>
+      <Link to="/">Home</Link>
+      <Link to="/dashboard">Dashboard</Link>
+    </nav>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+    </Routes>
+  </BrowserRouter>
+);
+
+export default AppRoutes;
+```
+
+Notes & best practices:
+
+- Use `Link` instead of anchor tags to avoid full page reloads.
+- Use `useNavigate` for programmatic navigation and `useParams` to read route parameters.
+- Prefer route-based code-splitting (lazy + Suspense) for large pages.
+- When using TypeScript, type route params and component props for safer navigation.
+- For advanced usage (nested routing, loaders, data APIs), refer to the official docs: [React Router Docs](https://reactrouter.com/)
+
 ## GraphQL Setup & Code Generation
 
 ### What is GraphQL?
