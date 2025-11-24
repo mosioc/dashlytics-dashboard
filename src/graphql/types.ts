@@ -95,6 +95,23 @@ export type TaskStagesSelectQuery = {
   };
 };
 
+export type CompanyContactsTableQueryVariables = Types.Exact<{
+  filter: Types.ContactFilter;
+  sorting?: Types.InputMaybe<Array<Types.ContactSort> | Types.ContactSort>;
+  paging: Types.OffsetPaging;
+}>;
+
+export type CompanyContactsTableQuery = {
+  contacts: Pick<Types.ContactConnection, "totalCount"> & {
+    nodes: Array<
+      Pick<
+        Types.Contact,
+        "id" | "name" | "avatarUrl" | "jobTitle" | "email" | "phone" | "status"
+      >
+    >;
+  };
+};
+
 export type CompaniesListQueryVariables = Types.Exact<{
   filter: Types.CompanyFilter;
   sorting?: Types.InputMaybe<Array<Types.CompanySort> | Types.CompanySort>;
