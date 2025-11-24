@@ -17,7 +17,7 @@ import { mapDealsData } from "./utilities";
 
 export const DashboardDealsChart = () => {
   // fetch deal stages filtered by title (won / lost)
-  const { data } = useList<GetFieldsFromList<DashboardDealsChartQuery>>({
+  const { result } = useList<GetFieldsFromList<DashboardDealsChartQuery>>({
     resource: "dealStages",
     filters: [{ field: "title", operator: "in", value: ["WON", "LOST"] }],
     meta: {
@@ -27,8 +27,8 @@ export const DashboardDealsChart = () => {
 
   // memoized mapping of fetched data into chart-friendly format
   const dealData = React.useMemo(() => {
-    return mapDealsData(data?.data);
-  }, [data?.data]);
+    return mapDealsData(result?.data);
+  }, [result?.data]);
 
   // chart configuration
   const config: AreaConfig = {
