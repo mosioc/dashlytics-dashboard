@@ -63,7 +63,7 @@ function App() {
                     {/* companies crud routes */}
                     <Route path="/companies">
                       <Route index element={<CompanyListPage />} />
-                      <Route path="new" element={<CompanyCreatePage />} />
+                      <Route path="create" element={<CompanyCreatePage />} />
                       <Route path="edit/:id" element={<CompanyEditPage />} />
                     </Route>
 
