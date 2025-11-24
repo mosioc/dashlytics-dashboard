@@ -7,14 +7,20 @@ import routerProvider, {
   DocumentTitleHandler,
   UnsavedChangesNotifier,
   CatchAllNavigate,
+  NavigateToResource,
 } from "@refinedev/react-router";
 import { App as AntdApp, ConfigProvider } from "antd";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router";
 import { dataProvider, liveProvider, authProvider } from "./providers";
-import { LoginPage } from "./routes/login";
 import { resources } from "./config/resources";
 import { ComponentLayout } from "./components";
-import { DashboardPage } from "./routes";
+import {
+  CompanyCreatePage,
+  CompanyEditPage,
+  CompanyListPage,
+  DashboardPage,
+  LoginPage,
+} from "./routes";
 
 function App() {
   return (
@@ -55,11 +61,11 @@ function App() {
                     <Route index element={<DashboardPage />} />
 
                     {/* companies crud routes */}
-                    {/* <Route path="/companies">
+                    <Route path="/companies">
                       <Route index element={<CompanyListPage />} />
-                      <Route path="new" element={<CompanyCreatePage />} />
+                      <Route path="create" element={<CompanyCreatePage />} />
                       <Route path="edit/:id" element={<CompanyEditPage />} />
-                    </Route> */}
+                    </Route>
 
                     {/* 404 fallback for authenticated users */}
                     {/* <Route path="*" element={<ErrorComponent />} /> */}
@@ -72,7 +78,7 @@ function App() {
                         key="authenticated-auth"
                         fallback={<Outlet />}
                       >
-                        {/* <NavigateToResource resource="dashboard" /> */}
+                        <NavigateToResource resource="dashboard" />
                       </Authenticated>
                     }
                   >
