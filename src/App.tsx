@@ -14,6 +14,7 @@ import { dataProvider, liveProvider, authProvider } from "./providers";
 import { LoginPage } from "./routes/login";
 import { resources } from "./config/resources";
 import { ComponentLayout } from "./components";
+import { DashboardPage } from "./routes";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
                 }}
               >
                 <Routes>
+                  {/* authenticated routes - requires login, redirects to /login if not authenticated */}
                   <Route
                     element={
                       <Authenticated
@@ -48,9 +50,34 @@ function App() {
                         </ComponentLayout>
                       </Authenticated>
                     }
-                  ></Route>
+                  >
+                    {/* dashboard home page */}
+                    <Route index element={<DashboardPage />} />
 
-                  <Route path="/login" element={<LoginPage />} />
+                    {/* companies crud routes */}
+                    {/* <Route path="/companies">
+                      <Route index element={<CompanyListPage />} />
+                      <Route path="new" element={<CompanyCreatePage />} />
+                      <Route path="edit/:id" element={<CompanyEditPage />} />
+                    </Route> */}
+
+                    {/* 404 fallback for authenticated users */}
+                    {/* <Route path="*" element={<ErrorComponent />} /> */}
+                  </Route>
+
+                  {/* public auth routes - redirects to dashboard if already authenticated */}
+                  <Route
+                    element={
+                      <Authenticated
+                        key="authenticated-auth"
+                        fallback={<Outlet />}
+                      >
+                        {/* <NavigateToResource resource="dashboard" /> */}
+                      </Authenticated>
+                    }
+                  >
+                    <Route path="/login" element={<LoginPage />} />
+                  </Route>
                 </Routes>
 
                 <RefineKbar />
