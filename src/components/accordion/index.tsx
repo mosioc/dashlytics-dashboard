@@ -5,7 +5,7 @@
  */
 
 import { Skeleton } from "antd";
-import { Text } from "@/components";
+import { Text } from "../";
 
 type Props = React.PropsWithChildren<{
   accordionKey: string;
