@@ -12,12 +12,12 @@ import type {
 } from "@refinedev/nestjs-query";
 import { Form, Input, Modal, Select } from "antd";
 import { CustomAvatar } from "../../../components";
-import { USERS_SELECT_QUERY } from "@/graphql/queries";
+import { USERS_SELECT_QUERY } from "../../../graphql/queries";
 import type {
   CreateCompanyMutation,
   CreateCompanyMutationVariables,
   UsersSelectQuery,
-} from "@/graphql/types";
+} from "../../../graphql/types";
 import { CREATE_COMPANY_MUTATION } from "./queries";
 
 export const CompanyCreateModal = () => {

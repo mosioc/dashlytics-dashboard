@@ -12,19 +12,19 @@ import type {
 } from "@refinedev/nestjs-query";
 import { Form, Input, InputNumber, Select } from "antd";
 import { CustomAvatar } from "../../../components";
-import { USERS_SELECT_QUERY } from "@/graphql/queries";
-import { getNameInitials } from "@/utilities";
+import { USERS_SELECT_QUERY } from "../../../graphql/queries";
+import { getNameInitials } from "../../../utilities";
 import { UPDATE_COMPANY_MUTATION } from "./queries";
 import type {
   BusinessType,
   CompanySize,
   Industry,
-} from "@/graphql/schema.types";
+} from "../../../graphql/schema.types";
 import type {
   UpdateCompanyMutation,
   UpdateCompanyMutationVariables,
   UsersSelectQuery,
-} from "@/graphql/types";
+} from "../../../graphql/types";
 
 // useForm hook for editing a company
 export const CompanyForm = () => {
