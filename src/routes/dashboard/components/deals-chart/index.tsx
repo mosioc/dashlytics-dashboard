@@ -1,0 +1,91 @@
+/*
+ * renders the deals chart on the dashboard.
+ * it fetches won/lost deals data via graphql, maps it for chart rendering,
+ * and displays an area chart using ant-design/plots.
+ */
+
+import React from "react";
+import { useList } from "@refinedev/core";
+import type { GetFieldsFromList } from "@refinedev/nestjs-query";
+import { DollarOutlined } from "@ant-design/icons";
+import { Area, type AreaConfig } from "@ant-design/plots";
+import { Card } from "antd";
+import { Text } from "@/components";
+import type { DashboardDealsChartQuery } from "@/graphql/types";
+import { DASHBOARD_DEALS_CHART_QUERY } from "./queries";
+import { mapDealsData } from "./utilities";
+
+export const DashboardDealsChart = () => {
+  // fetch deal stages filtered by title (won / lost)
+  const { result } = useList<GetFieldsFromList<DashboardDealsChartQuery>>({
+    resource: "dealStages",
+    filters: [{ field: "title", operator: "in", value: ["WON", "LOST"] }],
+    meta: {
+      gqlQuery: DASHBOARD_DEALS_CHART_QUERY,
+    },
+  });
+
+  // memoized mapping of fetched data into chart-friendly format
+  const dealData = React.useMemo(() => {
+    return mapDealsData(result?.data);
+  }, [result?.data]);
+
+  // chart configuration
+  const config: AreaConfig = {
+    isStack: false,
+    data: dealData,
+    xField: "timeText",
+    yField: "value",
+    seriesField: "state",
+    animation: true,
+    startOnZero: false,
+    smooth: true,
+    legend: {
+      offsetY: -6,
+    },
+    yAxis: {
+      tickCount: 4,
+      label: {
+        formatter: (v) => `$${Number(v) / 1000}k`,
+      },
+    },
+    tooltip: {
+      formatter: (data) => {
+        return {
+          name: data.state,
+          value: `$${Number(data.value) / 1000}k`,
+        };
+      },
+    },
+    areaStyle: (datum) => {
+      // gradient fills for won / lost states
+      const won = "l(270) 0:#ffffff 0.5:#b7eb8f 1:#52c41a";
+      const lost = "l(270) 0:#ffffff 0.5:#f3b7c2 1:#ff4d4f";
+      return { fill: datum.state === "Won" ? won : lost };
+    },
+    color: (datum) => {
+      // solid line color
+      return datum.state === "Won" ? "#52C41A" : "#F5222D";
+    },
+  };
+
+  return (
+    <Card
+      style={{ height: "100%" }}
+      headStyle={{ padding: "8px 16px" }}
+      bodyStyle={{ padding: "24px 24px 0px 24px" }}
+      title={
+        // card header with icon and title
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <DollarOutlined />
+          <Text size="sm" style={{ marginLeft: ".5rem" }}>
+            Deals
+          </Text>
+        </div>
+      }
+    >
+      {/* area chart component */}
+      <Area {...config} height={325} />
+    </Card>
+  );
+};
