@@ -95,6 +95,24 @@ export type TaskStagesSelectQuery = {
   };
 };
 
+export type CompaniesListQueryVariables = Types.Exact<{
+  filter: Types.CompanyFilter;
+  sorting?: Types.InputMaybe<Array<Types.CompanySort> | Types.CompanySort>;
+  paging: Types.OffsetPaging;
+}>;
+
+export type CompaniesListQuery = {
+  companies: Pick<Types.CompanyConnection, "totalCount"> & {
+    nodes: Array<
+      Pick<Types.Company, "id" | "name" | "avatarUrl"> & {
+        dealsAggregate: Array<{
+          sum?: Types.Maybe<Pick<Types.CompanyDealsSumAggregate, "value">>;
+        }>;
+      }
+    >;
+  };
+};
+
 export type DashboardDealsChartQueryVariables = Types.Exact<{
   filter: Types.DealStageFilter;
   sorting?: Types.InputMaybe<Array<Types.DealStageSort> | Types.DealStageSort>;
