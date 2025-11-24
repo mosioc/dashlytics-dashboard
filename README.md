@@ -1,5 +1,44 @@
 # Dashlytics-dashboard
 
+## Ant Design Plots
+
+`@ant-design/plots` is a collection of ready-made React chart components built on top of G2Plot. It offers declarative, production-ready chart components (Column, Line, Pie, Area, Gauge, etc.) that integrate nicely with Ant Design and React projects.
+
+Installation:
+
+```powershell
+npm install @ant-design/plots
+```
+
+Basic usage example:
+
+```tsx
+import React from "react";
+import { Column } from "@ant-design/plots";
+
+const DemoColumn: React.FC = () => {
+  const data = [
+    { month: "Jan", value: 38 },
+    { month: "Feb", value: 52 },
+    { month: "Mar", value: 61 },
+  ];
+  const config = {
+    data,
+    xField: "month",
+    yField: "value",
+  };
+  return <Column {...config} />;
+};
+
+export default DemoColumn;
+```
+
+Notes & best practices:
+
+- Components are React-first and work well alongside Ant Design UI components. No extra runtime is required beyond installing the package.
+- Ensure Ant Design styles are loaded globally if you use Ant components alongside plots (for example: `import "antd/dist/reset.css"`).
+- Types are provided; you can import config types from `@ant-design/plots` when building complex charts.
+- For advanced customization, animations, and examples, see the official docs: [charts.ant.design](https://charts.ant.design/)
 
 ## GraphQL Setup & Code Generation
 
