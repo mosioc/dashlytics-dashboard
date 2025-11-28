@@ -22,13 +22,3 @@ export const COMPANIES_LIST_QUERY = gql`
   }
 `;
 
-export const CREATE_COMPANY_MUTATION = gql`
-  mutation CreateCompany($input: CreateOneCompanyInput!) {
-    createOneCompany(input: $input) {
-      id
-      salesOwner {
-        id
-      }
-    }
-  }
-`;
