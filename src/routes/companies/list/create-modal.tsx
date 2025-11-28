@@ -10,15 +10,15 @@ import type {
   GetFieldsFromList,
   GetVariables,
 } from "@refinedev/nestjs-query";
-import { Form, Input, Modal, Select } from "antd";
-import { CustomAvatar } from "../../../components";
+import { Form, Input, Modal, Select, Space } from "antd";
+import { CustomAvatar, Text } from "../../../components";
 import { USERS_SELECT_QUERY } from "../../../graphql/queries";
 import type {
   CreateCompanyMutation,
   CreateCompanyMutationVariables,
   UsersSelectQuery,
 } from "../../../graphql/types";
-import { CREATE_COMPANY_MUTATION } from "./queries";
+import { CREATE_COMPANY_MUTATION } from "../../../graphql/mutations";
 
 export const CompanyCreateModal = () => {
   const go = useGo();
@@ -49,6 +49,7 @@ export const CompanyCreateModal = () => {
     meta: {
       gqlMutation: CREATE_COMPANY_MUTATION,
     },
+    warnWhenUnsavedChanges: true,
   });
 
   // fetch users for sales owner dropdown
@@ -93,10 +94,10 @@ export const CompanyCreateModal = () => {
               queryResult.data?.data?.map((user) => ({
                 value: user.id,
                 label: (
-                  <CustomAvatar
-                    name={user.name}
-                    // avatarUrl={user.avatarUrl ?? undefined}
-                  />
+                  <Space>
+                    <CustomAvatar name={user.name} />
+                    <Text>{user.name}</Text>
+                  </Space>
                 ),
               })) ?? []
             }
