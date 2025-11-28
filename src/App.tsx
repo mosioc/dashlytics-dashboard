@@ -1,7 +1,7 @@
 import { Authenticated, Refine } from "@refinedev/core";
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
-import { RefineThemes, useNotificationProvider } from "@refinedev/antd";
+import { useNotificationProvider } from "@refinedev/antd";
 import "@refinedev/antd/dist/reset.css";
 import routerProvider, {
   DocumentTitleHandler,
@@ -9,11 +9,12 @@ import routerProvider, {
   CatchAllNavigate,
   NavigateToResource,
 } from "@refinedev/react-router";
-import { App as AntdApp, ConfigProvider } from "antd";
+import { App as AntdApp } from "antd";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router";
 import { dataProvider, liveProvider, authProvider } from "./providers";
 import { resources } from "./config/resources";
 import { ComponentLayout } from "./components";
+import { ColorModeContextProvider } from "./contexts/color-mode";
 import {
   CompanyCreatePage,
   CompanyEditPage,
@@ -25,7 +26,7 @@ import {
 function App() {
   return (
     <BrowserRouter>
-      <ConfigProvider theme={RefineThemes.Green}>
+      <ColorModeContextProvider>
         <RefineKbarProvider>
           <AntdApp>
             <DevtoolsProvider>
@@ -94,7 +95,7 @@ function App() {
             </DevtoolsProvider>
           </AntdApp>
         </RefineKbarProvider>
-      </ConfigProvider>
+      </ColorModeContextProvider>
     </BrowserRouter>
   );
 }

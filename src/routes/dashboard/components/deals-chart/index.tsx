@@ -4,18 +4,22 @@
  * and displays an area chart using ant-design/plots.
  */
 
-import React from "react";
+import React, { useContext } from "react";
 import { useList } from "@refinedev/core";
 import type { GetFieldsFromList } from "@refinedev/nestjs-query";
 import { DollarOutlined } from "@ant-design/icons";
 import { Area, type AreaConfig } from "@ant-design/plots";
 import { Card } from "antd";
 import { Text } from "../../../../components";
+import { ColorModeContext } from "../../../../contexts/color-mode";
+import { getPlotTheme } from "./../../../../utilities/plot-theme";
 import type { DashboardDealsChartQuery } from "@/graphql/types";
 import { DASHBOARD_DEALS_CHART_QUERY } from "./queries";
 import { mapDealsData } from "./utilities";
 
 export const DashboardDealsChart = () => {
+  const colorModeContext = useContext(ColorModeContext);
+
   // fetch deal stages filtered by title (won / lost)
   const { result } = useList<GetFieldsFromList<DashboardDealsChartQuery>>({
     resource: "dealStages",
@@ -30,6 +34,9 @@ export const DashboardDealsChart = () => {
     return mapDealsData(result?.data);
   }, [result?.data]);
 
+  // get theme based on current mode
+  const plotTheme = colorModeContext ? getPlotTheme(colorModeContext.mode) : getPlotTheme("light");
+
   // chart configuration
   const config: AreaConfig = {
     isStack: false,
@@ -40,6 +47,7 @@ export const DashboardDealsChart = () => {
     animation: true,
     startOnZero: false,
     smooth: true,
+    theme: plotTheme,
     legend: {
       offsetY: -6,
     },

@@ -3,12 +3,16 @@
  * positioned at top with elevated background color for visual hierarchy
  */
 
-import React from "react";
-import { Layout, Space, theme } from "antd";
+import React, { useContext } from "react";
+import { Layout, Space, theme, Button } from "antd";
+import { BgColorsOutlined } from "@ant-design/icons";
 import { CurrentUser } from "../user";
+import { ColorModeContext } from "../../../contexts/color-mode";
+
 const { useToken } = theme;
 
 export const Header = () => {
+  const colorModeContext = useContext(ColorModeContext);
   // access current theme tokens for dynamic styling
   const { token } = useToken();
 
@@ -25,10 +29,23 @@ export const Header = () => {
     zIndex: 999,
   };
 
+  if (!colorModeContext) {
+    return null;
+  }
+
+  const { mode, toggleTheme } = colorModeContext;
+
   return (
     <Layout.Header style={headerStyles}>
       {/* right-aligned user controls section */}
       <Space align="center" size="middle">
+        {/* theme toggle button */}
+        <Button
+          type="text"
+          icon={<BgColorsOutlined />}
+          onClick={toggleTheme}
+          title={mode === "dark" ? "Switch to Light" : "Switch to Dark"}
+        />
         <CurrentUser />
       </Space>
     </Layout.Header>
