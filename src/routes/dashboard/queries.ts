@@ -11,5 +11,10 @@ export const DASHBOARD_TOTAL_COUNTS_QUERY = gql`
     deals {
       totalCount
     }
+    dealAggregate {
+      sum {
+        value
+      }
+    }
   }
 `;

@@ -199,4 +199,7 @@ export type DashboardTotalCountsQuery = {
   companies: Pick<Types.CompanyConnection, "totalCount">;
   contacts: Pick<Types.ContactConnection, "totalCount">;
   deals: Pick<Types.DealConnection, "totalCount">;
+  dealAggregate: Array<{
+    sum?: Types.Maybe<Pick<Types.DealSumAggregate, "value">>;
+  }>;
 };
