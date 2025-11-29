@@ -1,60 +1,50 @@
-import { RefineThemes } from "@refinedev/antd";
-import { ConfigProvider, theme } from "antd";
-import {
-  type PropsWithChildren,
-  createContext,
-  useEffect,
-  useState,
-} from "react";
+import { type PropsWithChildren, createContext, useEffect, useState } from "react";
+import { ConfigProvider, theme as antdTheme } from "antd";
 
 type ColorModeContextType = {
-  mode: string;
-  setMode: (mode: string) => void;
+  mode: "light" | "dark";
+  toggleTheme: () => void;
 };
 
-export const ColorModeContext = createContext<ColorModeContextType>(
-  {} as ColorModeContextType
+export const ColorModeContext = createContext<ColorModeContextType | undefined>(
+  undefined
 );
 
 export const ColorModeContextProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
-  const colorModeFromLocalStorage = localStorage.getItem("colorMode");
-  const isSystemPreferenceDark = window?.matchMedia(
-    "(prefers-color-scheme: dark)"
-  ).matches;
+  const [mode, setMode] = useState<"light" | "dark">("light");
 
-  const systemPreference = isSystemPreferenceDark ? "dark" : "light";
-  const [mode, setMode] = useState(
-    colorModeFromLocalStorage || systemPreference
-  );
-
+  // load theme from localStorage on mount
   useEffect(() => {
-    window.localStorage.setItem("colorMode", mode);
+    const saved = localStorage.getItem("refine-theme");
+    if (saved === "dark" || saved === "light") {
+      setMode(saved);
+    } else {
+      // fallback to system preference
+      const isSystemDark = window?.matchMedia("(prefers-color-scheme: dark)").matches;
+      setMode(isSystemDark ? "dark" : "light");
+    }
+  }, []);
+
+  // persist theme to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("refine-theme", mode);
   }, [mode]);
 
-  const setColorMode = () => {
-    if (mode === "light") {
-      setMode("dark");
-    } else {
-      setMode("light");
-    }
+  // toggle theme between light and dark
+  const toggleTheme = () => {
+    setMode((prev) => (prev === "dark" ? "light" : "dark"));
   };
 
-  const { darkAlgorithm, defaultAlgorithm } = theme;
-
   return (
-    <ColorModeContext.Provider
-      value={{
-        setMode: setColorMode,
-        mode,
-      }}
-    >
+    <ColorModeContext.Provider value={{ mode, toggleTheme }}>
       <ConfigProvider
-        // you can change the theme colors here. example: ...RefineThemes.Magenta,
         theme={{
-          ...RefineThemes.Blue,
-          algorithm: mode === "light" ? defaultAlgorithm : darkAlgorithm,
+          algorithm:
+            mode === "dark"
+              ? antdTheme.darkAlgorithm
+              : antdTheme.defaultAlgorithm,
         }}
       >
         {children}
@@ -62,3 +52,4 @@ export const ColorModeContextProvider: React.FC<PropsWithChildren> = ({
     </ColorModeContext.Provider>
   );
 };
+

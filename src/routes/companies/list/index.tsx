@@ -20,6 +20,7 @@ import type { CompaniesListQuery } from "@/graphql/types";
 import { currencyNumber } from "../../../utilities";
 import { COMPANIES_LIST_QUERY } from "./queries";
 import { Input, Space, Table } from "antd";
+import { FilterButtons } from "./filter-buttons";
 
 type Company = GetFieldsFromList<CompaniesListQuery>;
 
@@ -27,7 +28,11 @@ export const CompanyListPage = ({ children }: React.PropsWithChildren) => {
   const go = useGo();
 
   // setup table with search, sort, and pagination
-  const { tableProps, filters } = useTable<Company, HttpError, Company>({
+  const { tableProps, filters, sorters, setFilters, setSorters } = useTable<
+    Company,
+    HttpError,
+    Company
+  >({
     resource: "companies",
     onSearch: (values) => [
       {
@@ -83,6 +88,14 @@ export const CompanyListPage = ({ children }: React.PropsWithChildren) => {
           />
         )}
       >
+        {/* quick filter buttons and saved views */}
+        <FilterButtons
+          filters={filters}
+          sorters={sorters}
+          onFiltersChange={(newFilters) => setFilters(newFilters, "replace")}
+          onSortersChange={setSorters}
+        />
+
         <Table
           {...tableProps}
           pagination={{
