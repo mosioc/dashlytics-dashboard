@@ -19,8 +19,12 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    },
-    "ignoreDeprecations": "6.0"
+    }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    "**/__tests__/**",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ]
 }
