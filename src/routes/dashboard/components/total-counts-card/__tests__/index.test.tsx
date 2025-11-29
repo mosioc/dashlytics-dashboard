@@ -5,7 +5,11 @@ import { DashboardTotalCountsCard } from "../index";
 
 // mock utilities
 vi.mock("../../../../utilities", () => ({
-  currencyNumber: (value: number) => `$${value.toLocaleString()}`,
+  currencyNumber: (value: number) =>
+    new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(value),
 }));
 
 describe("DashboardTotalCountsCard", () => {
@@ -102,4 +106,3 @@ describe("DashboardTotalCountsCard", () => {
     expect(screen.getByText("$0.00")).toBeInTheDocument();
   });
 });
-
