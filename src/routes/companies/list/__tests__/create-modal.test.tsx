@@ -30,7 +30,9 @@ vi.mock("../../../components", () => ({
   CustomAvatar: ({ name }: { name: string }) => (
     <div data-testid="avatar">{name}</div>
   ),
-  Text: ({ children }: { children: React.ReactNode }) => <span>{children}</span>,
+  Text: ({ children }: { children: React.ReactNode }) => (
+    <span>{children}</span>
+  ),
 }));
 
 describe("CompanyCreateModal", () => {
@@ -91,7 +93,11 @@ describe("CompanyCreateModal", () => {
   });
 
   it("should render company name input with placeholder", () => {
-    render(<CompanyCreateModal />);
+    render(
+      <TestWrapper>
+        <CompanyCreateModal />
+      </TestWrapper>
+    );
 
     const input = screen.getByPlaceholderText("Please enter company name");
     expect(input).toBeInTheDocument();
@@ -187,4 +193,3 @@ describe("CompanyCreateModal", () => {
     expect(screen.getByText("Sales owner")).toBeInTheDocument();
   });
 });
-
