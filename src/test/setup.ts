@@ -6,6 +6,7 @@ import { afterEach, vi } from "vitest";
 // cleanup after each test
 afterEach(() => {
   cleanup();
+  localStorageMock.clear();
 });
 
 // mock window.matchMedia
@@ -44,4 +45,3 @@ const localStorageMock = (() => {
 Object.defineProperty(window, "localStorage", {
   value: localStorageMock,
 });
-
