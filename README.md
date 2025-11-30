@@ -1,6 +1,8 @@
 # Dashlytics
 
-A modern, full-featured CRM dashboard built with React, TypeScript, and Refine. Dashlytics provides real-time data visualization, company management, and business analytics with a professional Ant Design UI.
+A modern CRM dashboard built with React, TypeScript, and Refine. Dashlytics provides real-time data visualization, company management, and business analytics with a professional Ant Design UI.
+
+![Dashlytics screenshot demo](./dashlytics.png)
 
 ## Table of Contents
 
